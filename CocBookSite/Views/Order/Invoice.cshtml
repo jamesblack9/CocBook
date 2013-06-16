@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "Hóa đơn";
+}
+@using CocBookSite.ViewModels;
+@model Invoice
+<div class="container">
+    <div class="span6" id="order-step">
+        <div id="print">
+            <h3>
+                Đơn hàng CB00-@Model.Order.OrderID</h3>
+            <p>
+            </p>
+            <hr />
+            <h4>
+                - Thông tin giao hàng</h4>
+            <p>
+            </p>
+            <p>
+                Khách hàng : @Model.Order.Fullname</p>
+            <p>
+                Địa chỉ : @Model.Order.Street Quận @Model.Order.District HCM</p>
+            <p>
+                Điện thoại : @Model.Order.Phone</p>
+            <hr />
+            <h4>
+                - Chi tiết</h4>
+            <p>
+            </p>
+            <table class="table" id="order-summary">
+                <tr class="sightly-bigger-font">
+                    <th>
+                        Tên sách
+                    </th>
+                    <th width="15%">
+                        Số lượng
+                    </th>
+                    <th width="20%">
+                        Đơn giá
+                    </th>
+                    <th width="18%">
+                        Thành tiền
+                    </th>
+                </tr>
+                @{double sum = 0;}
+                @for (int i = 0; i < Model.OrderLine.Count; i++)
+                {
+                    var b = Model.OrderLine[i];
+                    sum += (double)b.Quantity * (double)b.Price;
+                    <tr>
+                        <td>
+                            @b.Book.Name
+                        </td>
+                        <td>
+                            @b.Quantity
+                        </td>
+                        <td>
+                            @b.Price đ
+                        </td>
+                        <td>
+                            @(b.Quantity * b.Price)
+                            đ
+                        </td>
+                    </tr>
+                }
+                <!-- Total -->
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td class="sightly-bigger-font">
+                        Tổng cộng:
+                    </td>
+                    <td class="sightly-bigger-font">
+                        <strong>@sum đ</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="button-contain text-right">
+            <a class="btn btn-large" href="@Url.Action("Index", "Home")"><i class="icon-shopping-cart">
+            </i>Trang chủ</a> <a class="btn btn-success btn-large" href="javascript:Print()"><i
+                class="icon-truck"></i> Xuất hóa đơn</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function Print() {
+        var printContents = document.getElementById("print").innerHTML;
+
+        var originalContents = document.body.innerHTML;
+
+        document.body.innerHTML = printContents;
+
+        window.print();
+
+        document.body.innerHTML = originalContents;
+    }
+</script>
+@if (false)
+{  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+
+    </script> 
+}

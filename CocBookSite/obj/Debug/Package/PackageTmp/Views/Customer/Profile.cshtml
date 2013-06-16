@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Trang Cá Nhân";
+}
+@using CocBookSite.ViewModels;
+@model UserProfile
+@if (ViewBag.InfoMess != null)
+{
+    <script type="text/javascript">
+        $().toastmessage('showSuccessToast', "Thông tin tài khoản đã được cập nhật...");
+    </script>
+}
+<div class="container">
+    <h2>
+        Trang của @Session["username"]</h2>
+    <div class="container">
+        <div class="span5">
+            <div class="accordion" id="accordion2">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                            Thông tin tài khoản </a>
+                    </div>
+                    <div id="collapseOne" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            <form id="address-form" class="form-stacked" method="post" action="@Url.Action("UpdateInfo", "Customer")">
+                            <!-- Address form -->
+                            <!-- user-name input-->
+                            <!-- full-name input-->
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Họ và tên</label>
+                                <div class="controls">
+                                    <input id="full-name" name="full-name" type="text" class="input-xlarge" value="@Model.CusInfo.Fullname">
+                                    <p class="help-block">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Địa chỉ mail</label>
+                                <div class="controls">
+                                    <input id="user-email" name="user-email" type="text" class="input-xlarge" value="@Model.CusInfo.Email">
+                                    <p class="help-block">
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Telephone -->
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Số điện thoại</label>
+                                <div class="controls">
+                                    <input id="phone" name="phone" type="text" class="input-xlarge" value="@Model.CusInfo.Phone">
+                                    <p class="help-block">
+                                        Dùng để xác nhận đơn hàng.</p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Địa chỉ nhà</label>
+                                <div class="controls">
+                                    <input id="address" name="address" type="text" class="input-xlarge" value="@Model.CusInfo.Street">
+                                    <p class="help-block">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">
+                                    Quận</label>
+                                <div class="controls">
+                                    <select id="district" name="district">
+                                        <option value="1" @(Model.CusInfo.District == "1" ? "selected" : "")>1</option>
+                                        <option value="2" @(Model.CusInfo.District == "2" ? "selected" : "")>2</option>
+                                        <option value="3" @(Model.CusInfo.District == "3" ? "selected" : "")>3</option>
+                                        <option value="4" @(Model.CusInfo.District == "4" ? "selected" : "")>4</option>
+                                    </select>
+                                    <p class="help-block">
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="button-contain text-right">
+                                <button type="submit" id="btn-register" class="btn btn-large btn-success">
+                                    Cập nhật
+                                </button>
+                                <a href="@Url.Action("Logout", "Home")" class="btn btn-large btn-success">Đăng xuất</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span5" id="order-history">
+            <div class="accordion" id="accordion3">
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapseTwo">
+                            Thông tin đơn hàng </a>
+                    </div>
+                    <div id="collapseTwo" class="accordion-body collapse in">
+                        <div class="accordion-inner">
+                            @if (Model.CusOrders.Count == 0)
+                            {
+                                @:Chưa có đơn hàng
+                            }
+                            else
+                            {
+                                    <table class="table">
+                                        <tr class="sightly-bigger-font">
+                                            <th width="30%">
+                                                Ngày tạo
+                                            </th>
+                                            <th width="20%">
+                                                Tổng cộng
+                                            </th>
+                                            <th width="20%">
+                                                Trạng Thái
+                                            </th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                        @for (int i = 0; i < Model.CusOrders.Count; i++)
+                                        {
+                                            var order = Model.CusOrders[i];
+                                            <tr>
+                                                <td>
+                                                    @order.RequestDate
+                                                </td>
+                                                <td>
+                                                    @order.Total đ
+                                                </td>
+                                                <td>
+                                                    @order.Status
+                                                </td>
+                                                <td>
+                                                @if (order.Status == "Created")
+                                                {
+                                                    <a href="@Url.Action("ReEdit", "Order", new { id = order.OrderID})" class="btn btn-small btn-danger">Sửa</a>
+                                                }
+                                                    <a href="@Url.Action("Invoice", "Order", new { id = order.OrderID})" class="btn btn-small btn-success">Xem</a>
+                                                </td>
+                                            </tr>    
+                                        }
+                                    </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

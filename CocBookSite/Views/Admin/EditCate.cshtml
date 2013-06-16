@@ -1,0 +1,43 @@
+﻿@using CocBookSite.Models;
+@model Category
+           
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                <form id="book-form" class="form-stacked" method="post" action="@Url.Action("SaveEditCate", "Admin")">
+                <!-- Address form -->
+                <input type="hidden" value="@Model.CateID" id="cid" name="cid"/>
+                <div class="control-group">
+                    <label class="control-label">
+                        Đang sử dụng</label>
+                    <div class="controls">
+                        <input type="checkbox" id="chkActive" name="chkActive" @(Model.Active==true?"checked":"") value="active"/>
+                    </div>
+                </div>
+                <!-- book-name input-->
+                <div class="control-group">
+                    <label class="control-label">
+                        Tên thể loại</label>
+                    <div class="controls">
+                        <input id="catename" name="catename" type="text" class="input-xlarge" value="@Model.Name">
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <div class="button-contain text-right">
+                    <button type="submit" id="btn-register" class="btn btn-large btn-success">
+                        Cập nhật
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (false)
+{  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+
+    </script> 
+}

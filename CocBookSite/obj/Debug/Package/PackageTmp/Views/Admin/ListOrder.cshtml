@@ -1,0 +1,59 @@
+﻿@using CocBookSite.Models;
+@model List<Order>
+<div class="span8">
+    <table>
+        <tr>
+            <th width="30%">
+                Ngày yêu cầu
+            </th>
+            <th width="15%">
+                Khách hàng
+            </th>
+            <th width="15%">
+                Tổng tiền
+            </th>
+            <th width="10%">
+                Trạng thái
+            </th>
+            <th width="30%">
+            </th>
+        </tr>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>@Model[i].RequestDate
+                </td>
+                <td>@Model[i].Username
+                </td>
+                <td>@Model[i].Total đ
+                </td>
+                <td>@Model[i].Status
+                </td>
+                <td>
+                    @if (Model[i].Status == "Created")
+                    {
+                        <a href="@Url.Action("Delivery", "Admin", new { id = Model[i].OrderID })" class="btn btn-small btn-success">
+                            Giao</a>
+                        <a href="@Url.Action("Cancel", "Admin", new { id = Model[i].OrderID })" class="btn btn-small btn-danger">
+                            Hủy</a>
+                        <a href="@Url.Action("ReEdit", "Order", new { id = Model[i].OrderID })" class="btn btn-small btn-danger">
+                            Sửa</a>
+                    }
+                        <a href="@Url.Action("Invoice", "Order", new { id = Model[i].OrderID })" class="btn btn-small">
+                            Xem</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<script>
+    function EditCate(id) {
+        $('#book-list').load("@Url.Action("EditCate", "Admin")",{cateid:id});
+    }
+</script>
+@if (false)
+{  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+
+    </script> 
+}

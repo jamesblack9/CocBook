@@ -1,0 +1,38 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/bootstrap.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/font-awesome.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/light-accord/css/liteaccordion.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/navbar-override-2.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/custom.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/fancybox/jquery.fancybox.css")"/>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/jrating/jRating.jquery.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/jquery.toastmessage.css")">
+    <script type="text/livescript" src="@Url.Content("~/Scripts/jquery-1.9.1.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.easing.1.3.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/liteaccordion.jquery.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.fancybox.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.carouFredSel-6.2.1.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jRating.jquery.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.toastmessage.js")"></script>
+</head>
+<body>
+    <div class="container  top-container">
+        <a href="@Url.Action("ManageBook","Admin")" class="btn btn-warning">Book</a>
+        <a href="@Url.Action("ManageCategory","Admin")" class="btn btn-warning">Category</a>
+        <a href="@Url.Action("ManageFeedback","Admin")" class="btn btn-warning">Feedback</a>
+        <a href="@Url.Action("ManageOrder","Admin")" class="btn btn-warning">Order</a>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "PageView";
+}
+@using CocBookSite.ViewModels
+@model PagingDisplay
+ <!--
+			Main Content
+ 
+-->
+    <div id='content'>
+        <!--
+			Left Menu
+ 
+-->
+        <div id='left-menu-container' class="span3">
+            <ul id='left-menu'>
+                <li>
+                    <div class="menu-block">
+                        <div class="subhead">
+                            Danh mục thể loại
+                        </div>
+                        <div class="block-body">
+                            <ul class="nav nav-list">
+                                @foreach (var cate in Model.CateList)
+                                {
+                                    <li class='@(cate.CateID.Equals(ViewBag.SelectCateID) ? "active" : "")'>@Html.ActionLink(@cate.Name, "CateFilter", "Home", new { id = @cate.CateID + "/" + @cate.Name }, null)</li>
+                                }
+                                <li class="divider"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--
+			Book List
+ 
+-->
+        <div id='book-list'>
+            <div id="new-book" class='book-div'>
+                <a href="@Url.Action("NewBooks", "Category")">
+                    <h4>
+                        Sách mới nhất</h4>
+                </a>
+                @if (Model.BookList.Count == 0)
+                {
+                    <h5>
+                        Chưa có thông tin</h5>
+                }
+                else
+                {
+                    <ul id='data'>
+                        @foreach (var b in Model.BookList)
+                        {
+                            <li>
+                                <div class="thumbnail">
+                                    <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @b.Name })">
+                                        <img src="@Url.Content("~/Content/" + @b.Avatar)" alt="@b.Name"></a>
+                                    <div class="caption">
+                                        <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @b.Name })">
+                                            <h5>
+                                                @b.Name</h5>
+                                        </a>
+                                        <p>
+                                            @b.AuthorName</p>
+                                        <span class="label label-success">@b.Price đ</span> <span class="fullprice">@b.ShowPrice
+                                            đ</span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                <div id='paging-link'>
+                    Page : @Html.PageLinks(Model, x => Url.Action("NewsBook",new {page=x}))
+                </div>
+            </div>
+         
+        </div>
+    </div>
+</div>

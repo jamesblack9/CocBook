@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Tìm kiếm";
+}
+@using CocBookSite.ViewModels;
+@model PagingDisplay
+<!--
+			Main Content
+ 
+-->
+<div class="container">
+    <div id='content'>
+        <!--
+			Left Menu
+ 
+-->
+        <div id='left-menu-container' class="span3">
+            <ul id='left-menu'>
+                <li>
+                    <div class="menu-block">
+                        <div class="subhead">
+                            Danh mục thể loại
+                        </div>
+                        <div class="block-body">
+                            <ul class="nav nav-list">
+                                @foreach (var cate in Model.CateList)
+                                {
+                                    <li class='@(cate.CateID.Equals(ViewBag.SelectedID) ? "active" : "")'>@Html.ActionLink(@cate.Name, "CateFilter", "Home", new { id = @cate.CateID + "/" + @Html.ChangeToUrlString(@cate.Name) }, null)</li>
+                                    <li class="divider"></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--
+			Book List
+ 
+-->
+        <div id='book-list'>
+            <div id="new-book" class='book-div'>
+                <a href="#" class='mygreenlink'>
+                    <h4>
+                        Kết quả tìm kiếm</h4>
+                </a>
+                @if (ViewBag.eid != 0)
+                {
+                    <input type="hidden" id="eid" value="@ViewBag.eid"/>
+                    
+                    <text>Có phải bạn muốn tìm <a id="eSearch" href="@Url.Action("Search",new {str = ViewBag.ExtendSearch,type=ViewBag.ExtendType})">@ViewBag.ExtendSearch</a></text>
+                }
+                @if (Model.BookList.Count == 0)
+                {
+                   
+                    @:Không tìm thấy kết quả cho <span style="font-weight:bold">@ViewBag.SearchKey</span>
+                    <select id="ddlSearch" name="SearchType" style="width: 120px">
+                            <option value="1" @(ViewBag.SearchType == "1" ? "selected" : "")>Tìm theo tên sách</option>
+                            <option value="2" @(ViewBag.SearchType == "2" ? "selected" : "")>Tìm theo tác giả</option>
+                    </select>
+                    
+                }
+                else
+                {
+                    @:Tìm thấy @Model.TotalItem kết quả với <span style="font-weight:bold">@ViewBag.SearchKey</span>
+                        <select id="ddlSearch" name="SearchType" style="width: 180px">
+                            <option value="1" @(ViewBag.SearchType == "1" ? "selected" : "")>Tìm theo tên sách</option>
+                            <option value="2" @(ViewBag.SearchType == "2" ? "selected" : "")>Tìm theo tác giả</option>
+                        </select>
+                    <div id='paging-link'>
+                        Trang : @Html.PageLinks(Model, x => Url.Action("Search", new { str = @ViewBag.SearchKey, type = @ViewBag.SearchType, page = x }))
+                    </div>
+                    <ul id='data'>
+                        @foreach (var b in Model.BookList)
+                        {
+                            <li>
+                                <div class="thumbnail">
+                                    <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @Html.ChangeToUrlString(@b.Name) })">
+                                        <img src="@Url.Content("~/Content/" + @b.Avatar)" alt="@b.Name"></a>
+                                    <div class="caption">
+                                        <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @b.Name })">
+                                            <h5>
+                                                @Html.ShortenString(@b.Name)</h5>
+                                        </a>
+                                        <p>
+                                            @b.AuthorName</p>
+                                        <span class="label label-success">@b.Price đ</span> <span class="fullprice">@b.ShowPrice
+                                            đ</span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <div id='paging-link'>
+                        Trang : @Html.PageLinks(Model, x => Url.Action("Search", new { str = @ViewBag.SearchKey, type = @ViewBag.SearchType, page = x }))
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    
+    $('#ddlSearch').change(function () {
+        var str = $('#ddlSearch').val();
+        $('#searchtype').val(str);
+        $('#search-form').submit(); 
+    })
+</script>

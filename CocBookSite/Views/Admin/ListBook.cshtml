@@ -1,0 +1,51 @@
+﻿@using CocBookSite.Models;
+@model List<Book>
+<div class="span8">
+    <table>
+        <tr>
+            <th width="40%">
+                Tên sách
+            </th>
+            <th width="20%">
+                Ngày tạo
+            </th>
+            <th width="20%">
+                Trạng thái
+            </th>
+            <th width="20%">
+            </th>
+        </tr>
+        @for (int i = 0; i < Model.Count; i++)
+    {
+            <tr>
+                <td>@Model[i].Name
+                </td>
+                <td>@Model[i].CreatedDate
+                </td>
+                <td align="center">
+                    @if (Model[i].Active == true)
+                {
+                        @:Đang bán
+                }
+                else
+                {
+                        @:Ngừng bán
+                                    }
+                </td>
+                <td>
+                    <a href="javascript:EditBook(@Model[i].BookID)" class="btn btn-warning">Chỉnh Sửa</a>
+                </td>
+            </tr>
+    }
+    </table>
+</div>
+<script>
+    function EditBook(id) {
+        $('#book-list').load("@Url.Action("EditBook","Admin")",{bookid:id});
+    }
+</script>
+@if (false) {  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+
+    </script> 
+}

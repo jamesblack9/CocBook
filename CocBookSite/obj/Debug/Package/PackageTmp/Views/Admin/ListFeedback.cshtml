@@ -1,0 +1,53 @@
+﻿@using CocBookSite.Models;
+@model List<Feedback>
+<div class="span8">
+    <table>
+        <tr>
+            <th width="30%">
+                Email
+            </th>
+            <th width="30%">
+                Nội dung
+            </th>
+            <th width="20%">
+                Ngày tạo
+            </th>
+            <th width="20%">
+            </th>
+        </tr>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <tr>
+                <td>@Model[i].email
+                </td>
+                <td>@Model[i].question
+                </td>
+                <td>@Model[i].createdate</td>
+                <td>
+                    @if (Model[i].answer == null)
+                    {
+                        <a href="javascript:Answer(@Model[i].AutoID)" class="btn btn-danger">Trả lời</a>
+                    }
+                    else
+                    {
+                        <a href="javascript:View(@Model[i].AutoID)" class="btn btn-success">Xem</a>
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<script>
+    function Answer(id) {
+        $('#book-list').load("@Url.Action("Answer", "Admin")",{fid:id});
+    }
+    function View(id){
+        $('#book-list').load("@Url.Action("ViewFeedback", "Admin")",{fid:id});
+    }
+</script>
+@if (false)
+{  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+
+    </script> 
+}

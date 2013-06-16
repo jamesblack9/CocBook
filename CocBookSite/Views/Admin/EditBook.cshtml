@@ -1,0 +1,150 @@
+﻿@using CocBookSite.Models;
+@model V_Book
+           
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                <form id="book-form" class="form-stacked" method="post" action="@Url.Action("SaveEditBook", "Admin")" enctype="multipart/form-data">
+                <!-- Address form -->
+                <input type="hidden" value="@Model.BookID" id="bid" name="bid"/>
+                <div class="control-group">
+                    <label class="control-label">
+                        Đang bán</label>
+                    <div class="controls">
+                        <input type="checkbox" id="chkActive" name="chkActive" @(Model.Active==true?"checked":"") value="active"/>
+                    </div>
+                </div>
+                <!-- book-name input-->
+                <div class="control-group">
+                    <label class="control-label">
+                        Tên Sách</label>
+                    <div class="controls">
+                        <input id="bookname" name="bookname" type="text" class="input-xlarge" value="@Model.Name">
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <!-- full-name input-->
+                <div class="control-group">
+                    <label class="control-label">
+                        Tác giả</label>
+                    <div class="controls">
+                        <input id="authorname" name="authorname" type="text" class="input-xlarge" value="@Model.AuthorName">
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Nhà xuất bản</label>
+                    <div class="controls">
+                        <input id="publisher" name="publisher" type="text" class="input-xlarge" value="@Model.Publisher">
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <!-- Telephone -->
+                <div class="control-group">
+                    <label class="control-label">
+                        Lần tái bản</label>
+                    <div class="controls">
+                        <input id="No" name="No" type="text" class="input" value="@Model.NoOfPublish">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Ngày xuất bản</label>
+                    <div class="controls">
+                        <input id="ptime" name="ptime" type="text" class="input" value="@Model.PublishTime">
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Giá bìa</label>
+                    <div class="controls">
+                        <input id="rprice" name="rprice" type="text" class="input" value="@Model.ShowPrice">
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Giá nhập</label>
+                    <div class="controls">
+                        <input id="iprice" name="iprice" type="text" class="input" value="@Model.BuyPrice">
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Giá bán</label>
+                    <div class="controls">
+                        <input id="sprice" name="sprice" type="text" class="input" value="@Model.Price">
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Thông tin</label>
+                    <div class="controls">
+                        <textarea id="info" name="info" rows="5" cols="21">@Model.Info</textarea>
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Thông tin thêm</label>
+                    <div class="controls">
+                        <textarea id="extendinfo" name="extendinfo" rows="5" cols="21">@Model.ExtendInfo</textarea>
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                @{
+                    var dbContext = new CocBookEntities();
+                    var cates = (from c in dbContext.Categories where c.Active ==true select c).ToList();
+                    var selectCate = (from c in dbContext.BookInCategories where c.BookID == Model.BookID select c).Single();
+                    var intCate= selectCate.CateID;
+                }
+                <div class="control-group">
+                    <label class="control-label">
+                        Thể loại</label>
+                    <div class="controls">
+                        <select id="cate" name="cate">
+                            @for (int i = 0; i < cates.Count; i++)
+                            {
+                                <option value="@cates[i].CateID" @(cates[i].CateID == intCate ? "selected" : "")>@cates[i].Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Hình ảnh</label>
+                    <div class="controls">
+                        <img src="@Url.Content("~/Content/" + @Model.Avatar)" width="150px" />
+                        <input type="file" id="pic" name="pic" />
+                    </div>
+                </div>
+                <div class="button-contain text-right">
+                    <button type="submit" id="btn-register" class="btn btn-large btn-success">
+                        Cập nhật
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (false)
+{  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+
+    </script> 
+}

@@ -1,0 +1,170 @@
+﻿@{
+}
+@using CocBookSite.Models;
+@model V_Book
+<div class="container">
+    <div id='content'>
+        <!-- Info about book: Image, Name, Price, Nhan xet? Sach co fancybox -->
+        <div id='book-info'>
+            <div class="span3">
+                <a class="fancybox" href="@Url.Content("~/Content/" + @Model.Avatar)" data-fancybox-group="gallery">
+                    <img src="@Url.Content("~/Content/" + @Model.Avatar)" width="270px" /></a>
+            </div>
+            <div id='book-info-2' class="span8 pd25 serif-div well">
+                <p class='book-name main-green-color'>
+                    @Model.Name
+                </p>
+                <p class="author">
+                    <strong>Tác giả:</strong> @Model.AuthorName
+                </p>
+                <p class="author">
+                    <strong>Xuất bản:</strong> @Model.Publisher
+                </p>
+                <hr />
+                <div id="rating-div">
+                    <strong>Đánh giá: </strong>
+                    <div id="rate" class="rating @(ViewBag.Rate ? "" : "jDisabled")" data-average="@Model.AveScore" data-id="@Model.BookID">
+                    </div>
+                    <p id="pRatingMessage">@ViewBag.RateMess</p>
+                </div>
+                <p class="price">
+                    <strong>Giá:</strong> <span class="label label-success">@Model.Price đ</span></p>
+                <p class="price">
+                    <strong>Giá bìa:</strong> <span class="fullprice">@Model.ShowPrice đ</span></p>
+                <hr />
+                <form id='cart-form' class="form-inline">
+                <p>
+                    <strong>Số lượng: </strong>
+                </p>
+                <input type="hidden" value="@Model.BookID" id="book-id" />
+                <input type="text" id="quantity" class="input-mini mar-right30" value="1" />
+                <input type="submit" class="btn btn-success" value="Cho vào giỏ hàng" />
+                <a class="btn btn-success" href="@Url.Action("Index","Home")">Quay lại</a>
+                </form>
+                <img onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=@Request.Url.AbsoluteUri', 'facebook_share', 'height=320, width=640, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, directories=no, status=no');" src="@Url.Content("~/Content/img/facebook-share-button.png")">
+            </div>
+        </div>
+        <!-- 2 Tab. Tab intro va Tab  -->
+        <div id='book-intro-container' class="well span11 sanserif-div pd25">
+            <ul id="book-intro-tab" class="nav nav-tabs">
+                <li class="active"><a href="#book-intro" data-toggle="tab">Giới thiệu sách</a></li>
+                <li><a href="#more-info" data-toggle="tab">Thông tin thêm</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <!-- trong này là HTML. Có gì tính sau -->
+                <div class="tab-pane fade in active" id="book-intro">
+                    <p style="text-align: justify;">
+                        <span style="font-size: medium;"><strong>@Model.Name</strong></span></p>
+                    <p style="text-align: justify;">
+                        <span class="userContent">@Model.Info</span></p>
+                </div>
+                <!-- Tạm để table chứa info -->
+                <div class="tab-pane fade" id="more-info">
+                    <table cellspacing="0" id='more-info-table' class="table table-bordered table-striped table-condensed">
+                        <tr>
+                            <td>
+                                Công ty phát hành
+                            </td>
+                            <td>
+                                @Html.GetExtendInfo(Model.ExtendInfo, 0)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Trọng lượng vận chuyển
+                            </td>
+                            <td>
+                                @Html.GetExtendInfo(Model.ExtendInfo, 1)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Kích thước
+                            </td>
+                            <td>
+                                @Html.GetExtendInfo(Model.ExtendInfo, 2)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Dịch giả
+                            </td>
+                            <td>
+                                @Html.GetExtendInfo(Model.ExtendInfo, 3)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Số trang
+                            </td>
+                            <td>
+                                @Html.GetExtendInfo(Model.ExtendInfo, 4)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Ngày xuất bản
+                            </td>
+                            <td>
+                                @Html.GetExtendInfo(Model.ExtendInfo, 5)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+
+        $(".fancybox").fancybox();
+
+        $(".rating").jRating({
+            length: 5,
+            rateMax: 5,
+            type: 'big'
+        });
+
+        $('#book-intro-tab a').click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        })
+
+    });
+    $('#cart-form').submit(function () {
+        $.post("@Url.Action("AddToCart", "Cart")",
+            {
+                bookID: $('#book-id').val(),
+                quantity: $('#quantity').val()
+            },
+            function(data,status,xhr){
+                if(data.Success){
+                    $().toastmessage('showSuccessToast', "Đã thêm vào giỏ hàng...");
+                    $('#cartregion').load("@Url.Action("GetCartButton", "Cart")");        
+                }
+                else{
+                    $().toastmessage('showWarningToast', "Đã thêm vào giỏ hàng...");    
+                }
+            });
+        return false;
+    });
+        function demo(id, score) {
+            $.post("@Url.Action("Rating","Book")",
+            {
+                bookID: id,
+                score: score
+            },
+            function(data,status,xhr){
+                $('#pRatingMessage').html(data.Message);
+            });
+                    
+         }
+</script>
+@if (false)
+{  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+
+    </script> 
+}

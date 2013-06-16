@@ -1,0 +1,7 @@
+c:\users\khoat_000\documents\visual studio 2010\Projects\CocBookSite\CocBookSite\bin\CocBookSite.dll
+c:\users\khoat_000\documents\visual studio 2010\Projects\CocBookSite\CocBookSite\bin\CocBookSite.pdb
+c:\users\khoat_000\documents\visual studio 2010\Projects\CocBookSite\CocBookSite\bin\EntityFramework.dll
+c:\users\khoat_000\documents\visual studio 2010\Projects\CocBookSite\CocBookSite\bin\EntityFramework.xml
+c:\users\khoat_000\documents\visual studio 2010\Projects\CocBookSite\CocBookSite\obj\Debug\CocBookSite.csprojResolveAssemblyReference.cache
+c:\users\khoat_000\documents\visual studio 2010\Projects\CocBookSite\CocBookSite\obj\Debug\CocBookSite.dll
+c:\users\khoat_000\documents\visual studio 2010\Projects\CocBookSite\CocBookSite\obj\Debug\CocBookSite.pdb

@@ -1,0 +1,494 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CocBookModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="CocBookModelStoreContainer">
+    <EntitySet Name="Account" EntityType="CocBookModel.Store.Account" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ActivationTicket" EntityType="CocBookModel.Store.ActivationTicket" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Author" EntityType="CocBookModel.Store.Author" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Book" EntityType="CocBookModel.Store.Book" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BookInCategory" EntityType="CocBookModel.Store.BookInCategory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BookPrice" EntityType="CocBookModel.Store.BookPrice" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Category" EntityType="CocBookModel.Store.Category" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ContraintValue" EntityType="CocBookModel.Store.ContraintValue" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Customer" EntityType="CocBookModel.Store.Customer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Feedback" EntityType="CocBookModel.Store.Feedback" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GiftCode" EntityType="CocBookModel.Store.GiftCode" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Order" EntityType="CocBookModel.Store.Order" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderDetail" EntityType="CocBookModel.Store.OrderDetail" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PointTransaction" EntityType="CocBookModel.Store.PointTransaction" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Rating" EntityType="CocBookModel.Store.Rating" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="CocBookModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SearchHistory" EntityType="CocBookModel.Store.SearchHistory" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sysdiagrams" EntityType="CocBookModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="V_Book" EntityType="CocBookModel.Store.V_Book" store:Type="Views" store:Schema="dbo" store:Name="V_Book">
+      <DefiningQuery>SELECT 
+      [V_Book].[BookID] AS [BookID], 
+      [V_Book].[Name] AS [Name], 
+      [V_Book].[AuthorID] AS [AuthorID], 
+      [V_Book].[AuthorName] AS [AuthorName], 
+      [V_Book].[Info] AS [Info], 
+      [V_Book].[Avatar] AS [Avatar], 
+      [V_Book].[Publisher] AS [Publisher], 
+      [V_Book].[NoOfPublish] AS [NoOfPublish], 
+      [V_Book].[PublishTime] AS [PublishTime], 
+      [V_Book].[BuyPrice] AS [BuyPrice], 
+      [V_Book].[ShowPrice] AS [ShowPrice], 
+      [V_Book].[Tags] AS [Tags], 
+      [V_Book].[ExtendInfo] AS [ExtendInfo], 
+      [V_Book].[CreatedDate] AS [CreatedDate], 
+      [V_Book].[Active] AS [Active], 
+      [V_Book].[Price] AS [Price], 
+      [V_Book].[DealPercentage] AS [DealPercentage], 
+      [V_Book].[AveScore] AS [AveScore]
+      FROM [dbo].[V_Book] AS [V_Book]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Account__RoleID__1BFD2C07" Association="CocBookModel.Store.FK__Account__RoleID__1BFD2C07">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Account" EntitySet="Account" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Activatio__Usern__5812160E" Association="CocBookModel.Store.FK__Activatio__Usern__5812160E">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="ActivationTicket" EntitySet="ActivationTicket" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Book__AuthorID__08EA5793" Association="CocBookModel.Store.FK__Book__AuthorID__08EA5793">
+      <End Role="Author" EntitySet="Author" />
+      <End Role="Book" EntitySet="Book" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BookInCat__BookI__0DAF0CB0" Association="CocBookModel.Store.FK__BookInCat__BookI__0DAF0CB0">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="BookInCategory" EntitySet="BookInCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BookInCat__CateI__0EA330E9" Association="CocBookModel.Store.FK__BookInCat__CateI__0EA330E9">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="BookInCategory" EntitySet="BookInCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__BookPrice__BookI__1367E606" Association="CocBookModel.Store.FK__BookPrice__BookI__1367E606">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="BookPrice" EntitySet="BookPrice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer__Userna__20C1E124" Association="CocBookModel.Store.FK__Customer__Userna__20C1E124">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Customer" EntitySet="Customer" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Feedback__admin__5CD6CB2B" Association="CocBookModel.Store.FK__Feedback__admin__5CD6CB2B">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Feedback" EntitySet="Feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__Username__300424B4" Association="CocBookModel.Store.FK__Order__Username__300424B4">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__BookI__35BCFE0A" Association="CocBookModel.Store.FK__OrderDeta__BookI__35BCFE0A">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__Order__34C8D9D1" Association="CocBookModel.Store.FK__OrderDeta__Order__34C8D9D1">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="OrderDetail" EntitySet="OrderDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PointTran__Usern__2B3F6F97" Association="CocBookModel.Store.FK__PointTran__Usern__2B3F6F97">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="PointTransaction" EntitySet="PointTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rating__BookID__267ABA7A" Association="CocBookModel.Store.FK__Rating__BookID__267ABA7A">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Rating__Username__25869641" Association="CocBookModel.Store.FK__Rating__Username__25869641">
+      <End Role="Account" EntitySet="Account" />
+      <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="varchar" Nullable="false" MaxLength="30" />
+    <Property Name="Password" Type="varchar" MaxLength="12" />
+    <Property Name="RoleID" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="ActivationTicket">
+    <Key>
+      <PropertyRef Name="AutoID" />
+    </Key>
+    <Property Name="AutoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="varchar" MaxLength="30" />
+    <Property Name="ActiveCode" Type="varchar" MaxLength="6" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="ActiveDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="AuthorID" />
+    </Key>
+    <Property Name="AuthorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="NickName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Avatar" Type="nvarchar" MaxLength="200" />
+    <Property Name="BioHistory" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="BookID" />
+    </Key>
+    <Property Name="BookID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="AuthorID" Type="int" />
+    <Property Name="AuthorName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Info" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Avatar" Type="nvarchar" MaxLength="100" />
+    <Property Name="Publisher" Type="nvarchar" MaxLength="50" />
+    <Property Name="NoOfPublish" Type="int" />
+    <Property Name="PublishTime" Type="varchar" MaxLength="10" />
+    <Property Name="BuyPrice" Type="float" />
+    <Property Name="ShowPrice" Type="float" />
+    <Property Name="Tags" Type="nvarchar" MaxLength="200" />
+    <Property Name="ExtendInfo" Type="nvarchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="BookInCategory">
+    <Key>
+      <PropertyRef Name="BookCateID" />
+    </Key>
+    <Property Name="BookCateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="BookID" Type="int" />
+    <Property Name="CateID" Type="int" />
+  </EntityType>
+  <EntityType Name="BookPrice">
+    <Key>
+      <PropertyRef Name="BookID" />
+      <PropertyRef Name="ApplyTime" />
+    </Key>
+    <Property Name="BookID" Type="int" Nullable="false" />
+    <Property Name="ApplyTime" Type="datetime" Nullable="false" />
+    <Property Name="Price" Type="float" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CateID" />
+    </Key>
+    <Property Name="CateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Info" Type="nvarchar" MaxLength="500" />
+    <Property Name="Position" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="ContraintValue">
+    <Key>
+      <PropertyRef Name="ContraintID" />
+    </Key>
+    <Property Name="ContraintID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ContrainName" Type="varchar" MaxLength="30" />
+    <Property Name="ContrainDescription" Type="varchar" MaxLength="100" />
+    <Property Name="ContrainValue" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="varchar" Nullable="false" MaxLength="30" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="District" Type="nvarchar" MaxLength="30" />
+    <Property Name="Street" Type="nvarchar" MaxLength="30" />
+    <Property Name="City" Type="nvarchar" MaxLength="30" />
+    <Property Name="Point" Type="int" />
+  </EntityType>
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="AutoID" />
+    </Key>
+    <Property Name="AutoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="email" Type="varchar" MaxLength="50" />
+    <Property Name="question" Type="nvarchar" MaxLength="1000" />
+    <Property Name="answer" Type="nvarchar" MaxLength="1000" />
+    <Property Name="valid" Type="bit" />
+    <Property Name="createdate" Type="datetime" />
+    <Property Name="answerdate" Type="datetime" />
+    <Property Name="admin" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="GiftCode">
+    <Key>
+      <PropertyRef Name="GiftID" />
+    </Key>
+    <Property Name="GiftID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GiftCode" Type="varchar" MaxLength="10" />
+    <Property Name="Discount" Type="float" />
+    <Property Name="FromDate" Type="datetime" />
+    <Property Name="ToDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="OrderID" Type="int" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="varchar" MaxLength="30" />
+    <Property Name="RequestDate" Type="datetime" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="250" />
+    <Property Name="Total" Type="float" />
+    <Property Name="Status" Type="varchar" MaxLength="30" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="20" />
+    <Property Name="District" Type="nvarchar" MaxLength="30" />
+    <Property Name="Street" Type="nvarchar" MaxLength="30" />
+    <Property Name="City" Type="nvarchar" MaxLength="30" />
+    <Property Name="Elog" Type="nvarchar" MaxLength="200" />
+    <Property Name="GiftCode" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="DetailID" />
+    </Key>
+    <Property Name="DetailID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="OrderID" Type="int" />
+    <Property Name="BookID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="Price" Type="float" />
+  </EntityType>
+  <EntityType Name="PointTransaction">
+    <Key>
+      <PropertyRef Name="TranID" />
+    </Key>
+    <Property Name="TranID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="varchar" MaxLength="30" />
+    <Property Name="Point" Type="int" />
+    <Property Name="TranTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="RateID" />
+    </Key>
+    <Property Name="RateID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="varchar" MaxLength="30" />
+    <Property Name="BookID" Type="int" />
+    <Property Name="Score" Type="float" />
+    <Property Name="RateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Info" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SearchHistory">
+    <Key>
+      <PropertyRef Name="AutoID" />
+    </Key>
+    <Property Name="AutoID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="SearchValue" Type="nvarchar" MaxLength="80" />
+    <Property Name="Username" Type="varchar" MaxLength="30" />
+    <Property Name="HitCount" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'CocBook.dbo.V_Book' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="V_Book">
+    <Key>
+      <PropertyRef Name="BookID" />
+    </Key>
+    <Property Name="BookID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="AuthorID" Type="int" />
+    <Property Name="AuthorName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Info" Type="nvarchar" MaxLength="1000" />
+    <Property Name="Avatar" Type="nvarchar" MaxLength="100" />
+    <Property Name="Publisher" Type="nvarchar" MaxLength="50" />
+    <Property Name="NoOfPublish" Type="int" />
+    <Property Name="PublishTime" Type="varchar" MaxLength="10" />
+    <Property Name="BuyPrice" Type="float" />
+    <Property Name="ShowPrice" Type="float" />
+    <Property Name="Tags" Type="nvarchar" MaxLength="200" />
+    <Property Name="ExtendInfo" Type="nvarchar" MaxLength="500" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="Active" Type="bit" />
+    <Property Name="Price" Type="float" />
+    <Property Name="DealPercentage" Type="float" />
+    <Property Name="AveScore" Type="float" />
+  </EntityType>
+  <Association Name="FK__Account__RoleID__1BFD2C07">
+    <End Role="Roles" Type="CocBookModel.Store.Roles" Multiplicity="0..1" />
+    <End Role="Account" Type="CocBookModel.Store.Account" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Account">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Activatio__Usern__5812160E">
+    <End Role="Account" Type="CocBookModel.Store.Account" Multiplicity="0..1" />
+    <End Role="ActivationTicket" Type="CocBookModel.Store.ActivationTicket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="ActivationTicket">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Book__AuthorID__08EA5793">
+    <End Role="Author" Type="CocBookModel.Store.Author" Multiplicity="0..1" />
+    <End Role="Book" Type="CocBookModel.Store.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Author">
+        <PropertyRef Name="AuthorID" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BookInCat__BookI__0DAF0CB0">
+    <End Role="Book" Type="CocBookModel.Store.Book" Multiplicity="0..1" />
+    <End Role="BookInCategory" Type="CocBookModel.Store.BookInCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="BookID" />
+      </Principal>
+      <Dependent Role="BookInCategory">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BookInCat__CateI__0EA330E9">
+    <End Role="Category" Type="CocBookModel.Store.Category" Multiplicity="0..1" />
+    <End Role="BookInCategory" Type="CocBookModel.Store.BookInCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CateID" />
+      </Principal>
+      <Dependent Role="BookInCategory">
+        <PropertyRef Name="CateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__BookPrice__BookI__1367E606">
+    <End Role="Book" Type="CocBookModel.Store.Book" Multiplicity="1" />
+    <End Role="BookPrice" Type="CocBookModel.Store.BookPrice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="BookID" />
+      </Principal>
+      <Dependent Role="BookPrice">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer__Userna__20C1E124">
+    <End Role="Account" Type="CocBookModel.Store.Account" Multiplicity="1" />
+    <End Role="Customer" Type="CocBookModel.Store.Customer" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Customer">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Feedback__admin__5CD6CB2B">
+    <End Role="Account" Type="CocBookModel.Store.Account" Multiplicity="0..1" />
+    <End Role="Feedback" Type="CocBookModel.Store.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="admin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__Username__300424B4">
+    <End Role="Account" Type="CocBookModel.Store.Account" Multiplicity="0..1" />
+    <End Role="Order" Type="CocBookModel.Store.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__BookI__35BCFE0A">
+    <End Role="Book" Type="CocBookModel.Store.Book" Multiplicity="0..1" />
+    <End Role="OrderDetail" Type="CocBookModel.Store.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="BookID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__Order__34C8D9D1">
+    <End Role="Order" Type="CocBookModel.Store.Order" Multiplicity="0..1" />
+    <End Role="OrderDetail" Type="CocBookModel.Store.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetail">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PointTran__Usern__2B3F6F97">
+    <End Role="Account" Type="CocBookModel.Store.Account" Multiplicity="0..1" />
+    <End Role="PointTransaction" Type="CocBookModel.Store.PointTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="PointTransaction">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rating__BookID__267ABA7A">
+    <End Role="Book" Type="CocBookModel.Store.Book" Multiplicity="0..1" />
+    <End Role="Rating" Type="CocBookModel.Store.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="BookID" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Rating__Username__25869641">
+    <End Role="Account" Type="CocBookModel.Store.Account" Multiplicity="0..1" />
+    <End Role="Rating" Type="CocBookModel.Store.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Account">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

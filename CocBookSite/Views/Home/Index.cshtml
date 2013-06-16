@@ -1,0 +1,263 @@
+﻿@{
+    ViewBag.Title = "Trang Chủ";
+}
+@using CocBookSite.ViewModels;
+@model Home
+<!--
+			Slider
+ 
+-->
+@if (ViewBag.BuyMess != null)
+{
+    <script type="text/javascript">
+        $().toastmessage('showSuccessToast', "Cảm ơn bạn đã mua hàng.Đơn hàng sẽ được xác nhận trong thời gian sớm nhất");
+    </script>
+}
+<div class="container">
+    <div id='slider'>
+        <ol>
+            <li>
+                <h2>
+                    <span>Sách độc</span></h2>
+                <div>
+                    <img src="@Url.Content("~/Content/img-demo/1.jpg")" alt="image" />
+                </div>
+            </li>
+            <li>
+                <h2>
+                    <span>Sách hay</span></h2>
+                <div>
+                    <img src="@Url.Content("~/Content/img-demo/2.jpg")" alt="image" />
+                </div>
+            </li>
+            <li>
+                <h2>
+                    <span>Cóc Book</span></h2>
+                <div>
+                    <img src="@Url.Content("~/Content/img-demo/3.jpg")" alt="image" />
+                </div>
+            </li>
+            <li>
+                <h2>
+                    <span>Sách lạ</span></h2>
+                <div>
+                    <img src="@Url.Content("~/Content/img-demo/4.jpg")" alt="image" />
+                </div>
+            </li>
+            <li>
+                <h2>
+                    <span>Sách mới</span></h2>
+                <div>
+                    <img src="@Url.Content("~/Content/img-demo/5.jpg")" alt="image" />
+                </div>
+            </li>
+        </ol>
+    </div>
+    <!--
+			Main Content
+ 
+-->
+    <div id='content'>
+        <!--
+			Left Menu
+ 
+-->
+        <div id='left-menu-container' class="span3">
+            <ul id='left-menu'>
+                <li>
+                    <div class="menu-block">
+                        <div class="subhead">
+                            Danh mục thể loại
+                        </div>
+                        <div class="block-body">
+                            <ul class="nav nav-list">
+                                @foreach (var cate in Model.CateList)
+                                {
+                                    <li class='@(cate.CateID.Equals(ViewBag.SelectCateID) ? "active" : "")'>@Html.ActionLink(@cate.Name, "CateFilter", "Home", new { id = @cate.CateID + "/" + @Html.ChangeToUrlString(@cate.Name) }, null)</li>
+                                }
+                                <li class="divider"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--
+			Book List
+ 
+-->
+        <div id='book-list'>
+            <div id="new-book" class='book-div'>
+                <a href="@Url.Action("NewBooks", "Category")" class='mygreenlink'>
+                    <h4>
+                        Sách mới nhất</h4>
+                </a>
+                @if (Model.NewList.Count == 0)
+                {
+                    <h5>
+                        Chưa có thông tin</h5>
+                }
+                else
+                {
+                    <ul id='first-carousel'>
+                        @foreach (var b in Model.NewList)
+                        {
+                            <li>
+                                <div class="thumbnail">
+                                    <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @Html.ChangeToUrlString(@b.Name) })">
+                                        <img src="@Url.Content("~/Content/" + @b.Avatar)" alt="@b.Name"></a>
+                                    <div class="caption">
+                                        <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @b.Name })">
+                                            <h5>
+                                                @b.Name</h5>
+                                        </a>
+                                        <p>
+                                            @b.AuthorName</p>
+                                        <span class="label label-success">@b.Price đ</span> <span class="fullprice">@b.ShowPrice
+                                            đ</span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                <a class="prev" id="first_prev" href="#"><span></span></a><a class="next" id="first_next"
+                    href="#"><span></span></a>
+            </div>
+            <div id="best_book" class="book-div">
+                <a href="@Url.Action("BestBooks", "Category")" class='mygreenlink'>
+                    <h4>
+                        Sách được bình chọn nhất</h4>
+                </a>
+                @if (Model.HighRatingList.Count == 0)
+                {
+                    <h5>
+                        Chưa có thông tin</h5>
+                }
+                else
+                {
+                    <ul id='second-carousel'>
+                        @foreach (var b in Model.HighRatingList)
+                        {
+                            <li>
+                                <div class="thumbnail">
+                                    <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @Html.ChangeToUrlString(@b.Name) })">
+                                        <img src="@Url.Content("~/Content/" + @b.Avatar)" alt="@b.Name"></a>
+                                    <div class="caption">
+                                        <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @b.Name })">
+                                            <h5>
+                                                @b.Name</h5>
+                                        </a>
+                                        <p>
+                                            @b.AuthorName</p>
+                                        <span class="label label-success">@b.Price đ</span> <span class="fullprice">@b.ShowPrice
+                                            đ</span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                <a class="prev" id="second_prev" href="#"><span></span></a><a class="next" id="second_next"
+                    href="#"><span></span></a>
+            </div>
+            <div id="recommend_book" class="book-div">
+                <a href="@Url.Action("DealBooks", "Category")" class='mygreenlink'>
+                    <h4>
+                        Sách giá tốt nhất</h4>
+                </a>
+                @if (Model.DealList.Count == 0)
+                {
+                    <h5>
+                        Chưa có thông tin</h5>
+                }
+                else
+                {
+                    <ul id='third-carousel'>
+                        @foreach (var b in Model.DealList)
+                        {
+                            <li>
+                                <div class="thumbnail">
+                                    <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @Html.ChangeToUrlString(@b.Name) })">
+                                        <img src="@Url.Content("~/Content/" + @b.Avatar)" alt="@b.Name"></a>
+                                    <div class="caption">
+                                        <a href="@Url.Action("Details", "Book", new { id = @b.BookID + "/" + @b.Name })">
+                                            <h5>
+                                                @b.Name</h5>
+                                        </a>
+                                        <p>
+                                            @b.AuthorName</p>
+                                        <span class="label label-success">@b.Price đ</span> <span class="fullprice">@b.ShowPrice
+                                            đ</span>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                <a class="prev" id="third_prev" href="#"><span></span></a><a class="next" id="third_next"
+                    href="#"><span></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+                $('#slider').liteAccordion({
+					containerWidth : 1120,
+					containerHeight: 220, 
+    theme : 'light',
+    firstSlide : 3,
+    easing: 'easeOutBounce'
+});
+
+$('#first-carousel').carouFredSel({
+	items: 4,
+	circular: false,
+    infinite: false,
+    auto    : false,
+    prev    : {
+        button  : "#first_prev",
+        key     : "left"
+    },
+	    next    : {
+        button  : "#first_next",
+        key     : "right"
+    },
+});
+
+$('#third-carousel').carouFredSel({
+	items: 4,
+	circular: false,
+    infinite: false,
+    auto    : false,
+    prev    : {
+        button  : "#third_prev",
+        key     : "left"
+    },
+	    next    : {
+        button  : "#third_next",
+        key     : "right"
+    },
+});
+
+$('#second-carousel').carouFredSel({
+	items: 4,
+	circular: false,
+    infinite: false,
+    auto    : false,
+    prev    : {
+        button  : "#second_prev",
+        key     : "left"
+    },
+	    next    : {
+        button  : "#second_next",
+        key     : "right"
+    },
+});
+
+$('.dropdown-toggle').dropdown();
+
+
+//Chrome carousel fix
+$('.caroufredsel_wrapper').css('height',400);
+</script>

@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/bootstrap.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/font-awesome.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/light-accord/css/liteaccordion.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/navbar-override-2.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/custom.css")" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/fancybox/jquery.fancybox.css")"/>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/jrating/jRating.jquery.css")">
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/jquery.toastmessage.css")">
+    <script type="text/livescript" src="@Url.Content("~/Scripts/jquery-1.9.1.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/bootstrap.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.easing.1.3.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/liteaccordion.jquery.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.fancybox.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.carouFredSel-6.2.1.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jRating.jquery.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.toastmessage.js")"></script>
+    <meta content="@ViewBag.SiteURL" property="og:url">
+    <meta content="@ViewBag.Image" property="og:image">
+    <meta content="@ViewBag.Title" property="og:title">
+    <meta content="@ViewBag.Description" property="og:description">
+</head>
+<body>
+    <div class="container top-container">
+        <div id='logo' class="span1">
+            <img src="@Url.Content("~/Content/img/naturally-green_logo.png")" />
+        </div>
+        <div id='introduction' class="span5">
+            <div class="popover left sanserif-div">
+                <h3 class="popover-title main-green-color text-center">
+                    Cóc Book</h3>
+                <div class="popover-content text-center">
+                    <img src="@Url.Content("~/Content/img/facebook-new.png")" width="50" />
+                    Đọc sách để thành công
+                </div>
+            </div>
+        </div>
+        <div id='user-cart' class="span4">
+            <div class="user span1" id="loginregion">
+                @Html.Partial("LoginButton")
+            </div>
+            <div class="cart span2 dropdown" id="cartregion">
+                @Html.Partial("CartButton")
+            </div>
+        </div>
+    </div>
+    <!-- NavBar. Contains login form and cart -->
+    <div id='navBar'>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <ul class="nav sanserif-div">
+                    <li><a href="@Url.Content("~/Home")">Trang chủ</a> </li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="@Url.Action("ContactUs", "Home")">Liên hệ</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="#">Chính sách</a></li>
+                    <li class="divider-vertical"></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+                @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { @class = "navbar-form pull-right", id = "search-form" }))
+                {
+                    <div class="input-append">
+                        <input type="text" class="span4" name="searchkey" value="@ViewBag.SearchKey"/>
+                        <input type="hidden" id="searchtype" name="searchtype" value="@ViewBag.SearchType"/>
+                        <button type="submit" class="btn">
+                            <i class='icon-search'></i>&nbsp;
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @RenderBody()
+    <div id='footer'>
+        <div class="container">
+            <div class="row">
+                <div class="footer-content-1
+    span4">
+                    <h4>
+                        Hỗ trợ khách hàng</h4>
+                    <ul>
+                        <li>Hotline: <strong style="color: #ea5e13">(08)9-999-999</strong></li>
+                        <li><a href="javascript::void(0)" onclick="SnapABug.startLink();" title="Email &
+    Chat">Email & Chat</a> </li>
+                        <li><a href="#" title="Các câu hỏi thường gặp">Các câu hỏi thường gặp</a> </li>
+                        <li><a href="#" title="Chính sách đổi trả hàng">Chính sách đổi trả</a> </li>
+                        <li><a href="#" title="Phương thức vận chuyển">Phương thức vận chuyển</a> </li>
+                    </ul>
+                </div>
+                <div class="footer-content-1 span4">
+                    <h4>
+                        Mua sắm an toàn</h4>
+                    <ul>
+                        <li><a href="#" title="Hướng dẫn đặt hàng">Hướng dẫn đặt hàng</a> </li>
+                        <li><a href="#" title="Hướng dẫn thanh toán">Hướng dẫn thanh toán</a> </li>
+                        <li><a href="#" title="Chính sách bảo mật">Chính sách bảo mật</a> </li>
+                        <li><a href="#" title="Điều khoản sử dụng">Điều khoản sử dụng</a> </li>
+                    </ul>
+                </div>
+                <div class="footer-content-1
+    span4">
+                    <h4>
+                        Về trang web</h4>
+                    <ul>
+                        <li><a href="#" title="Giới thiệu Cóc Book">Giới thiệu</a> </li>
+                        <li><a href="#" title="Tuyển dụng">Tuyển Dụng</a> </li>
+                    </ul>
+                </div>
+            </div>
+            <hr />
+            <div class="row text-center">
+                <h4>
+                    Bản quyền</h4>
+                <p>
+                    Bản quyền bởi KhoaTND</p>
+            </div>
+        </div>
+    </div>
+    <!-- Hidden Login Div -->
+    <div class="modal hide" id="loginModal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" id="btnClose">
+                ✕</button>
+            <h3>
+                Cóc Book</h3>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+            <div class="row-fluid">
+                <div class="tab-content">
+                    <div class="tab-pane active text-left" id="login">
+                        <form method="post" name="login_form" id="login_form" action="#">
+                        <p>
+                            <input type="text" class="span12" name="username" id="username" placeholder="Tài khoản" />
+                        </p>
+                        <p>
+                            <input type="password" class="span12" name="passwd" id="passwd" placeholder="Mật khẩu" />
+                        </p>
+                        <div class="mg15 text-right">
+                            <p id="login-mess" style="color: Red">
+                            </p>
+                        </div>
+                        <p>
+                            <label class="checkbox">
+                                <input type="checkbox" id="chkRemember" name="chkRemember" />
+                                Ghi nhớ mật khẩu
+                            </label>
+                        </p>
+                        <button type="submit" class="btn btn-success btn-block btn-large">
+                            Đăng nhập</button>
+                        <div class="mg15 text-right">
+                            <a href="#forgotpassword" class="mygreenlink mg15
+    text-right" data-toggle="tab">Quên mật khẩu</a> <a href="@Url.Action("Register", "Customer")"
+    class="mygreenlink">Đăng ký ngay bây giờ</a>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane
+    fade text-left" id="forgotpassword">
+                        <form method="post" action='#' name="forgot_password" id="forgot_password">
+                        <p>
+                            Nhập tên đăng nhập</p>
+                        <input type="text" class="span12" name="cusname" id="cusname" placeholder="tài khoản">
+                        </p>
+                        <p>
+                            Nhập địa chỉ email</p>
+                        <input type="text" class="span12" name="cusmail" id="cusmail" placeholder="email">
+                        </p>
+                        <p>
+                            <button id="btnLogin" type="submit" class="btn btn-success">
+                                Gửi mật khẩu</button>
+                            <a href="#login" class="btn" data-toggle="tab" id="swich">Đăng nhập lại</a>
+                        </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">    
+    $('#login_form').submit(function () {
+            $('#btnClose').click();        
+            $.post("@Url.Action("Login", "Home")",
+            {
+                username: $('#username').val(),
+                password: $('#passwd').val()
+            },
+            function(data,status,xhr){
+                if(data.Success){
+                        if(data.GoAdmin){
+                            window.location.href = "/Admin/Index";
+                        }
+                        else{
+                            $('#loginregion').load("@Url.Action("GetLoginButton", "Home")");
+                            $().toastmessage('showSuccessToast', "Đăng nhập thành công...");
+                             if(data.Reload){
+                                   location.reload();
+                            }
+                       }
+                }else{
+                    $('#login-mess').html(data.Message);
+                    $('#passwd').val("");
+                    $('#linkLogin').click();
+            }
+            });
+            return false;
+        });
+
+    $('#forgot_password').submit(function(){
+        $('#btnClose').click();        
+            $.post("@Url.Action("ForgotPassword", "Home")",
+            {
+                username: $('#cusname').val(),
+                email: $('#cusmail').val()
+            },
+            function(data,status,xhr){
+            if(data.Success){
+                $().toastmessage('showSuccessToast', "Một email đã được gửi để bạn khôi phục mật khẩu...");
+            }
+            });
+        $('#swich').click();
+        return false;
+    });
+</script>
+</html>
+@if (false)
+{  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+        function () {
+
+        }
+    </script> 
+}

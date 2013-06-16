@@ -1,0 +1,49 @@
+﻿@using CocBookSite.Models;
+@{ 
+    Cart cart = (Cart)Session["cart"];
+    if (cart == null || cart.lineCollection.Count == 0)
+    {
+
+    <a href="http://tiki.vn/checkout/cart/" title="Xem Giỏ Hàng" class="cart-a dropdown-toggle"
+        data-toggle="dropdown" data-target="#"><span class="total-cart ">0</span><span class="mini-cart-title">
+            Giỏ Hàng</span> <span class="caret cart-arrow"></span></a>
+    <div class="cart-content dropdown-menu" role="menu">
+        <p class="empty">
+            Không có sản phẩm nào trong giỏ hàng của bạn.</p>
+    </div>
+    }
+    else
+    {
+    
+    <a href="http://tiki.vn/checkout/cart/" title="Xem Giỏ Hàng" class="cart-a dropdown-toggle"
+        data-toggle="dropdown" data-target="#"><span class="total-cart ">@cart.lineCollection.Count</span><span
+            class="mini-cart-title"> Giỏ Hàng</span> <span class="caret cart-arrow"></span>
+    </a>
+    <div class="cart-content dropdown-menu" role="menu">
+    <ul>
+        @for (int i = 0; i < cart.lineCollection.Count; i++)
+        {
+            var b = cart.lineCollection[i];
+            <li class="row mini-cart-products">
+                <div class="product-images span1">
+                    <a href="@Url.Action("Details", "Book", new { id = @b.Book.BookID + "/" + @Html.ChangeToUrlString(@b.Book.Name) })">
+                        <img src="@Url.Content("~/Content/" + @b.Book.Avatar)" alt="@b.Book.Name" /></a>
+                </div>
+                <div class="product-details span2 serif-div">
+                    <a href="@Url.Action("Details", "Book", new { id = @b.Book.BookID + "/" + @Html.ChangeToUrlString(@b.Book.Name) })" class="main-green-color sightly-bigger-font">
+                        @b.Book.Name</a>
+                    <div class="mini-cart-qty-box">
+                        Số lượng: <span>@b.Quantity</span></div>
+                    <div class="mini-cart-qty-box">
+                        Giá: <span>@b.Book.Price</span></div>
+                </div>
+            </li>
+        }
+        </ul>
+        <div class="text-center single-button-div">
+            <a href="@Url.Action("Cart","Cart")" class="btn btn-success">Xem giỏ hàng</a>
+        </div>
+    </div>
+    
+    }
+}

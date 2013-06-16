@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "Giỏ hàng";
+}
+@using CocBookSite.Models;
+@{ 
+    Cart cart = (Cart)Session["cart"];
+    double sum = 0;
+    if (cart == null || cart.lineCollection.Count == 0)
+    {
+    <div id='content'>
+        <!-- Info about book: Image, Name, Price, Nhan xet? Sach co fancybox -->
+        <div id='big-cart-div' class="serif-div">
+            <div class='top-cart row'>
+                <div class="span5">
+                    <h3 class="main-green-color">
+                        Nội dung giỏ hàng</h3>
+                </div>
+                <div class="span7 text-right">
+                    <a class="btn btn-large" href="@Url.Action("Index", "Home")"><i class="icon-shopping-cart">
+                    </i>Tiếp tục mua sắm</a>
+                </div>
+            </div>
+            <div id='big-cart-table' class="row">
+                Chưa có sản phẩm trong giỏ hàng
+            </div>
+        </div>
+    </div>
+        return;
+    }
+}
+<div id='content'>
+    <!-- Info about book: Image, Name, Price, Nhan xet? Sach co fancybox -->
+    <div id='big-cart-div' class="serif-div">
+        <div class='top-cart row'>
+            <div class="span5">
+                <h3 class="main-green-color">
+                    Nội dung giỏ hàng</h3>
+            </div>
+            <div class="span7 text-right">
+                <a class="btn btn-large" href="@Url.Action("Index", "Home")"><i class="icon-shopping-cart">
+                </i>Tiếp tục mua sắm</a> <a class="btn btn-success btn-large" href="@Url.Action("Order", "Order")">
+                    <i class="icon-truck"></i>Thanh toán</a>
+            </div>
+        </div>
+        <div id='big-cart-table' class="row">
+            <table class="table">
+                <tr class="sightly-bigger-font">
+                    <th>
+                        Tên sản phẩm
+                    </th>
+                    <th width="10%">
+                        Số lượng
+                    </th>
+                    <th width="15%">
+                        Đơn giá
+                    </th>
+                    <th width="15%">
+                        Tổng tạm
+                    </th>
+                    <th>
+                        Xóa
+                    </th>
+                </tr>
+                @for (int i = 0; i < cart.lineCollection.Count; i++)
+                {
+                    var b = cart.lineCollection[i];
+                    sum += (double)b.Quantity * (double)b.Book.Price;
+                    <tr id="row-@b.Book.BookID">
+                        <td>
+                            <div class="cart-item-img">
+                                <a href="@Url.Action("Details", "Book", new { id = @b.Book.BookID + "/" + @Html.ChangeToUrlString(@b.Book.Name) })">
+                                    <img src="@Url.Content("~/Content/" + @b.Book.Avatar)" alt="@b.Book.Name" /></a>
+                            </div>
+                            <div class="cart-item-info sanserif-div">
+                                <a href="@Url.Action("Details", "Book", new { id = @b.Book.BookID + "/" + @Html.ChangeToUrlString(@b.Book.Name) })" class="main-green-color sightly-bigger-font">
+                                    @b.Book.Name</a>
+                                <p class="author">
+                                    <strong>Tác giả:</strong> @b.Book.AuthorName
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <input id="quantity-@b.Book.BookID" type="number" class="input-mini" value="@b.Quantity" onclick="javascript:UpdateQuantity(@b.Book.BookID)"/>
+                        </td>
+                        <td>
+                            @b.Book.Price đ
+                        </td>
+                        <td id="temp-@b.Book.BookID">
+                            @(b.Book.Price * b.Quantity)
+                            đ
+                        </td>
+                        <td>
+                            <input type="button" id="btn-remove" onclick="javascript:RemoveFromCart(@b.Book.BookID)" value="Bỏ chọn" class="btn btn-danger">
+                        </td>
+                    </tr>        
+                }
+                <!-- Total -->
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td class="sightly-bigger-font">
+                        Tổng cộng:
+                    </td>
+                    <td class="sightly-bigger-font">
+                        <strong id="total">@sum đ</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="bottom-cart row">
+            <div class="span5">
+                <p>
+                    *Giá trên chưa bao gồm thuế và phí vận chuyển.</p>
+            </div>
+            <div class="span7 text-right">
+                <a class="btn btn-large" href="@Url.Action("Index", "Home")"><i class="icon-shopping-cart">
+                </i>Tiếp tục mua sắm</a> <a id="link-order" class="btn btn-success btn-large" href="@Url.Action("Order", "Order")">
+                    <i class="icon-truck"></i>Thanh toán</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function UpdateQuantity(id){
+        var value = $('#quantity-'+id).val();
+        if(value==0){
+            RemoveFromCart(id);
+        }else{
+             $.post("@Url.Action("UpdateCart", "Cart")", { bookID: id, quantity:value },
+             function (data, status, xhr) {
+                 if (data.Success) {
+                     $('#temp-'+id).html(data.Temp +" đ")
+                     $('#total').html(data.Sum +" đ");
+                 } else {
+                     $().toastmessage('showErrorToast', "Đã có lỗi xảy ra xin thử lại sau..." + data.BName);
+                 }
+             });
+        }
+
+    }
+    function RemoveFromCart(id) {
+        var row = "#row-" + id;
+        $.post("@Url.Action("RemoveFromCart", "Cart")", { bookID: id },
+             function (data, status, xhr) {
+                 if (data.Success) {
+                     $(row).fadeOut(500);
+                     $().toastmessage('showSuccessToast', "Đã bỏ " + data.BName +" khỏi giỏ hàng...");
+                     $('#total').html(data.Sum +" đ");
+                     if(data.End){
+                        // reload page
+                        //$('#link-order').
+                        //$('#content').fadeOut(300);
+                     }
+                     $('#cartregion').load("@Url.Action("GetCartButton","Cart")");
+                 } else {
+                     $().toastmessage('showErrorToast', "Đã có lỗi xảy ra xin thử lại sau..." + data.BName);
+                 }
+             });
+    }
+</script>
+@if (false)
+{  
+    <script src="/Scripts/jquery-1.5.1-vsdoc.js" type="text/javascript">
+
+    </script> 
+}

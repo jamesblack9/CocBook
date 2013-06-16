@@ -1,0 +1,32 @@
+﻿@using CocBookSite.Models;
+@model Feedback
+<div class="accordion" id="accordion2">
+    <div class="accordion-group">
+        <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+                <form id="book-form" class="form-stacked">
+                <!-- Address form -->
+                <input type="hidden" value="@Model.AutoID" id="fid" name="fid"/>
+                <!-- book-name input-->
+                <div class="control-group">
+                    <label class="control-label">
+                        Câu hỏi</label>
+                    <div class="controls">
+                        <input id="question" name="question" type="text" class="input-xlarge" value="@Model.question" disabled />
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">
+                        Trả lời</label>
+                    <div class="controls">
+                        <input id="answer" name="answer" type="text" class="input-xlarge" value="@Model.answer" disabled/>
+                        <p class="help-block">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

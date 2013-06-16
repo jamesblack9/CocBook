@@ -1,0 +1,23 @@
+﻿<div class="user span1">
+    @if (Request.IsAuthenticated && ViewData["Logoff"] == null)
+    {
+        <a href="@Url.Action("Profile","Customer")" title="" class="user-a"><span>
+            <b>Welcome, @Context.User.Identity.Name</b></span><br />
+            <span class="link-account">Quản lý thông tin</span></a>
+    }
+    else
+    {
+        if (Session["Admin"] != null)
+        {
+        <a href="@Url.Action("Index", "Admin")" title="" class="user-a"><span>
+            <b>Admin Home</b></span><br />
+            <span class="link-account">Đơn hàng</span></a>
+        }
+        else
+        {
+        <a href="" title="" class="user-a" data-toggle="modal" data-target="#loginModal" id="linkLogin"><span>
+            <b>Đăng nhập</b></span><br />
+            <span class="link-account">Tài khoản & Đơn hàng</span></a>
+        }
+    }
+</div>

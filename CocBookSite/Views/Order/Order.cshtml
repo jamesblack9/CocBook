@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "Thanh Toán";
+}
+@using CocBookSite.ViewModels;
+@model Payment
+<div class="container">
+    <!--
+			Main Content
+ 
+-->
+    <form method="post" action="@Url.Action("Order", "Order")" id="Order-form">
+    <div id='order-step'>
+        <div class="accordion" id="accordion2">
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                        Thông tin giao hàng </a>
+                </div>
+                <div id="collapseOne" class="accordion-body collapse in">
+                    <div class="accordion-inner">
+                        <!-- Address form -->
+                        <!-- full-name input-->
+                        <div class="control-group">
+                            <label class="control-label">
+                                Họ và tên</label>
+                            <div class="controls">
+                                <input id="full-name" name="full-name" type="text" class="input-xlarge" value="@Model.Cus.Fullname">
+                                <p class="help-block">
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Telephone -->
+                        <div class="control-group">
+                            <label class="control-label">
+                                Số điện thoại</label>
+                            <div class="controls">
+                                <input id="phone" name="phone" type="text" class="input" value="@Model.Cus.Phone">
+                                <p class="help-block">
+                                    Dùng để xác nhận đơn hàng.</p>
+                            </div>
+                        </div>
+                        <!-- address-line1 input-->
+                        <div class="control-group">
+                            <label class="control-label">
+                                Địa chỉ</label>
+                            <div class="controls">
+                                <input id="address" name="address" type="text" class="input-xlarge" value="@Model.Cus.Street">
+                                <p class="help-block">
+                                    VD: 298 Nguyễn Hồng Đào</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- region input-->
+                            <div class="control-group span3">
+                                <label class="control-label">
+                                    Quận/huyện</label>
+                                <div class="controls">
+                                    <select class="span3" id="district" name="district">
+                                        <option value="1" @(Model.Cus.District == "1" ? "selected" : "")>1</option>
+                                        <option value="2" @(Model.Cus.District == "2" ? "selected" : "")>2</option>
+                                        <option value="3" @(Model.Cus.District == "3" ? "selected" : "")>3</option>
+                                        <option value="4" @(Model.Cus.District == "4" ? "selected" : "")>4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-contain text-right">
+                            <button type="button" id="btn-acc-1" class="btn btn-large">
+                                Tiếp tục
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
+                        Phương thức vận chuyển </a>
+                </div>
+                <div id="collapseTwo" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <label class="radio">
+                            <input type="radio" name="optSpeed" id="optionsRadios1" value="normal" checked>
+                            Vận chuyển thông thường.
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="optSpeed" id="optionsRadios2" value="fast">
+                            Chuyển phát nhanh.
+                        </label>
+                        <div class="button-contain text-right">
+                            <button type="button" id="btn-acc-2" class="btn btn-large">
+                                Tiếp tục
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                        Phương thức thanh toán </a>
+                </div>
+                <div id="collapseThree" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <div class="direct-payment">
+                            <label class="radio">
+                                <input type="radio" name="optPaymentMethod" id="optPay1" value="cash" checked>
+                                Thanh toán bằng tiền mặt.
+                            </label>
+                        </div>
+                        <div class="transfer-payment">
+                            <label class="radio">
+                                <input type="radio" name="optPaymentMethod" id="optPay2" value="bank">
+                                Thanh toán qua chuyển khoản.
+                            </label>
+                        </div>
+                        <div class="button-contain text-right">
+                            <button type="button" id="btn-acc-3" class="btn btn-large">
+                                Tiếp tục
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
+                        Xác nhận đơn hàng </a>
+                </div>
+                <div id="collapseFour" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        <table class="table" id="order-summary">
+                            <tr class="sightly-bigger-font">
+                                <th>
+                                    Tên sách
+                                </th>
+                                <th width="15%">
+                                    Số lượng
+                                </th>
+                                <th width="20%">
+                                    Đơn giá
+                                </th>
+                                <th width="18%">
+                                    Tổng tạm
+                                </th>
+                            </tr>
+                            @{double sum = 0;}
+                            @for (int i = 0; i < Model.Cart.lineCollection.Count; i++)
+                            {
+                                var b = Model.Cart.lineCollection[i];
+                                sum += (double)b.Quantity * (double)b.Book.Price;
+                                <tr>
+                                    <td>
+                                        @b.Book.Name
+                                    </td>
+                                    <td>
+                                        @b.Quantity
+                                    </td>
+                                    <td>
+                                        @b.Book.Price đ
+                                    </td>
+                                    <td>
+                                        @(b.Quantity * b.Book.Price)
+                                        đ
+                                    </td>
+                                </tr>
+                            }
+                            <!-- Total -->
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td class="sightly-bigger-font">
+                                    Tổng cộng:
+                                </td>
+                                <td class="sightly-bigger-font">
+                                    <strong>@sum đ</strong>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="control-group">
+                            <label class="control-label">
+                                Ghi chú thêm cho đơn hàng</label>
+                            <div class="controls">
+                                <textarea rows="3" class="input-xlarge" name="comment"></textarea>
+                                <p class="help-block">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="button-contain text-right">
+                            <button type="submit" id="btn-acc-3" class="btn btn-large btn-success">
+                                Mua hàng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+
+        $(".fancybox").fancybox();
+
+        $('#btn-acc-1').click(function () {
+            $('#collapseOne').collapse('hide');
+            $('#collapseTwo').collapse('show');
+        });
+
+        $('#btn-acc-2').click(function () {
+            $('#collapseTwo').collapse('hide');
+            $('#collapseThree').collapse('show');
+        });
+
+        $('#btn-acc-3').click(function () {
+            $('#collapseThree').collapse('hide');
+            $('#collapseFour').collapse('show');
+        });
+    });
+</script>
